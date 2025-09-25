@@ -1,11 +1,20 @@
 
 const express = require("express")
+const app = express()
 const dotenv = require("dotenv")
 const mongoose = require("mongoose")
+const authRoute = require("./routes/auth")
+const bcrypt = require("bcrypt")
 
 dotenv.config()
+app.use(express.json()
+);
 
-const app = express()
+app.use("/api/auth", authRoute) // predefining route or initial an route path
+
+
+
+
 mongoose.connect(process.env.MONGO_URL).then(() =>{
     console.log("Mongo DB Connected")
 })
