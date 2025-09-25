@@ -37,9 +37,38 @@ const register = async(req, res) =>{
     res.status(200).json({message : "user registered"})
 }
 
-const login = (req, res) =>{
+const login = async(req, res) =>{
+    const{email,password} = req.body
+    // console.log(name);
+    if(!email) {
+        return res.status(400).json({message : "name not found", })
+    }
+     if(!password) {
+        return res.status(400).json({message : "password not found", })
+    }
 
+    try{
+        var user = await User.find({email : email})
+        if(user.length == 0){
+            return res.status(404).json({message : "email not exist"})
+        }
+    }catch(error){
+        res.status(500).json({message: "error"})
+    }
+
+    const passwordcheck = await bcrypt.compare(password,user[0].password)
+    console.log(passwordcheck);
+    if(passwordcheck == 0){
+        return res.status(400).json({message : "password is incorrect"})
+        
+        
+    }
+
+    return res.status(200).json({message : "login successful"})
 }
+
+
+
 
 
 module.exports = {
