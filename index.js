@@ -5,10 +5,14 @@ const dotenv = require("dotenv")
 const mongoose = require("mongoose")
 const authRoute = require("./routes/auth")
 const bcrypt = require("bcrypt")
+var cors = require('cors')
+
 
 dotenv.config()
 app.use(express.json()
 );
+app.use(cors())
+
 
 app.use("/api/auth", authRoute) // predefining route or initial an route path
 
